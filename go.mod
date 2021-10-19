@@ -1,4 +1,4 @@
-module slacker
+module github.com/armosec/slacker
 
 go 1.17
 
