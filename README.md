@@ -16,7 +16,7 @@ token:
 
 can work with user & bot tokens:
 bots must be able to:
-conversations:join
+channels:join
 chat:write 
 
 
