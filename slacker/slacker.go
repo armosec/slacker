@@ -61,3 +61,23 @@ func (bot *SlackBot) SendCriticalMessage(channelID, message string) error {
 func (bot *SlackBot) SendINFOMessage(channelID, message string) error {
 	return bot.SendMessage("INFO", channelID, message)
 }
+
+func (bot *SlackBot) FindChannel(channelName string) (string, error) {
+	if channelName[0] == '#' {
+		channelName = channelName[1:]
+	}
+
+	for l, cursor, err := bot.api.GetConversations(&slack.GetConversationsParameters{ExcludeArchived: true}); err == nil && len(l) > 0; l, cursor, err = bot.api.GetConversations(&slack.GetConversationsParameters{ExcludeArchived: true, Cursor: cursor}) {
+		for i := range l {
+			if l[i].Name == channelName {
+				return l[i].ID, nil
+			}
+
+		}
+	}
+
+	return "", fmt.Errorf("channel not found(via name)")
+
+}
+
+//TODO: find channels, broadcast, uploadFile

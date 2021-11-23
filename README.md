@@ -16,8 +16,13 @@ token:
 
 can work with user & bot tokens:
 bots must be able to:
-channels:join
-chat:write 
 
+
+channels:join
+channels:read
+groups:read
+chat:write 
+im:read
+mpim:read
 
 
