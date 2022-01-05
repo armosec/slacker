@@ -2,8 +2,15 @@ package slacker
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/slack-go/slack"
+)
+
+const (
+	//see https://api.slack.com/authentication/token-types
+	USER_TOKEN_PREFIX = "xoxp-"
+	BOT_TOKEN_PREFIX  = "xoxb-"
 )
 
 type SlackBot struct {
@@ -13,8 +20,10 @@ type SlackBot struct {
 }
 
 func SlackBotInit(channelID, token string, isDebugMode bool) (*SlackBot, error) {
-	if len(token) < 57 {
-		return nil, fmt.Errorf("invalid token length")
+
+	//no length limitations due to https://api.slack.com/changelog/2016-08-23-token-lengthening
+	if !strings.HasPrefix(token, USER_TOKEN_PREFIX) && !strings.HasPrefix(token, BOT_TOKEN_PREFIX) {
+		return nil, fmt.Errorf("invalid token: unknown prefix see https://api.slack.com/authentication/token-types")
 	}
 
 	bot := &SlackBot{
