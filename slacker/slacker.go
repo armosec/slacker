@@ -89,5 +89,5 @@ func (bot *SlackBot) FindChannel(channelName string) (string, error) {
 
 }
 
-//
+//..
 //TODO: find channels, broadcast, uploadFile
